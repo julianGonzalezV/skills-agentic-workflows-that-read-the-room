@@ -16,6 +16,7 @@ network:
   allowed:
     - github.blog
     - github.com
+    - awesome-copilot.github.com
 safe-outputs:
   create-pull-request:
     draft: true
@@ -32,7 +33,8 @@ Keep Mona's GitHub Info website current with concise, practical updates backed b
 2. Use the GitHub repository API tools to read the repository guidance and reference files you need, including the current `site/content/github-info.md`.
 3. Use the `web-fetch` tool to fetch `https://github.blog/latest/`.
 4. Use the `web-fetch` tool to fetch `https://github.blog/changelog/`.
-5. Prefer recent, useful items that fit Mona's editorial angle. Cite the relevant GitHub Blog or Changelog source in the content.
+5. Use the `web-fetch` tool to fetch `https://awesome-copilot.github.com/workflows/`.
+6. Include useful Awesome Copilot workflows among the sources when they fit Mona's editorial angle. Cite the relevant source in the content.
 
 ## Update
 
