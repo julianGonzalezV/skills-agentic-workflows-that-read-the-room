@@ -38,7 +38,4 @@ Keep Mona's GitHub Info website current with concise, practical updates backed b
 6. Include useful Awesome Copilot workflows among the sources when they fit Mona's editorial angle. Cite the relevant source in the content.
 
 ## Update
-
-Edit only `site/content/github-info.md`. Keep summaries short and practical, preserve the existing structure, avoid duplicating existing entries, and leave unrelated work untouched. If the sources do not support a worthwhile update, do not invent one and do not create a pull request.
-
 After editing, review the diff for accuracy, source links, formatting, and accidental unrelated changes. When there is a meaningful update, use the `create-pull-request` safe output to open a draft pull request for Mona to review. Describe the sources consulted and summarize the changes in the pull request body. Never write directly to the default branch.
