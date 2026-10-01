@@ -1,41 +1,38 @@
 ---
 name: update-github-info
+description: Draft website updates for Mona's GitHub Info site from official GitHub sources.
 on:
-  schedule: daily
   workflow_dispatch:
-permissions:
-  contents: read
-  pull-requests: read
-engine: copilot
-model: gpt-4.1
-tools:
-  github:
-    toolsets: [repos, pull_requests]
-  web-fetch:
-  edit:
-network:
-  allowed:
-    - github.blog
-    - github.com
-    - awesome-copilot.github.com
+  schedule:
+    - cron: '17 9 * * *'
 safe-outputs:
   create-pull-request:
+    title-prefix: "[mona] "
     draft: true
-    title-prefix: "[github-info] "
+    fallback-as-issue: false
+tools:
+  edit:
+  web-fetch:
+network:
+  allowed:
+    - github.com
+    - github.blog
 ---
 
-# Update GitHub Info
+# Update Mona's GitHub Info website
 
-Keep Mona's GitHub Info website current with concise, practical updates backed by official GitHub sources.
+Read `notes/mona-notes.md` before making changes.
 
-## Research
+Use these sources:
+- `notes/mona-notes.md`
+- GitHub Blog: https://github.blog/latest/
+- GitHub Changelog: https://github.blog/changelog/
 
-1. Read `notes/mona-notes.md` before making any changes.
-2. Use the GitHub repository API tools to read the repository guidance and reference files you need, including the current `site/content/github-info.md`.
-3. Use the `web-fetch` tool to fetch `https://github.blog/latest/`.
-4. Use the `web-fetch` tool to fetch `https://github.blog/changelog/`.
-5. Use the `web-fetch` tool to fetch `https://awesome-copilot.github.com/workflows/`.
-6. Include useful Awesome Copilot workflows among the sources when they fit Mona's editorial angle. Cite the relevant source in the content.
+Update `site/content/github-info.md` with concise,
+practical updates for readers and include source context when content comes
+from the GitHub Blog or GitHub Changelog.
 
-## Update
-After editing, review the diff for accuracy, source links, formatting, and accidental unrelated changes. When there is a meaningful update, use the `create-pull-request` safe output to open a draft pull request for Mona to review. Describe the sources consulted and summarize the changes in the pull request body. Never write(push-commit) to the default main or production branch.
+Open a pull request for Mona to review. 
+Use a pull request title that mentions Mona or GitHub Info. 
+Do not write directly to `main`;
+rely on `safe-outputs` with `create-pull-request`.
