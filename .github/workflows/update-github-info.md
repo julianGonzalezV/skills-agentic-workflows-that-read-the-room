@@ -14,6 +14,28 @@ safe-outputs:
 tools:
   edit:
   web-fetch:
+steps:
+  - name: Check external source HTTP status
+    shell: bash
+    run: |
+      urls=(
+        https://github.blog/latest/
+        https://github.blog/changelog/
+        https://awesome-copilot.github.com/workflows/
+        https://docs.github.com/en/release-notes
+      )
+      {
+        printf '| URL | HTTP status | curl exit code |\n'
+        printf '|---|---:|---:|\n'
+        for url in "${urls[@]}"; do
+          if status=$(curl -sS -L --max-time 20 -o /dev/null -w '%{http_code}' "$url"); then
+            curl_exit=0
+          else
+            curl_exit=$?
+          fi
+          printf '| %s | %s | %s |\n' "$url" "${status:-000}" "$curl_exit"
+        done
+      } | tee -a "$GITHUB_STEP_SUMMARY"
 network:
   allowed:
     - github.com
@@ -35,9 +57,12 @@ Use these sources:
 
 For every external source above, use the `web_fetch` tool enabled by
 `tools: web-fetch`. Do not use shell commands such as `curl` or `wget` to fetch
-web pages. If a fetch fails during a normal run, do not use unverified content;
-call `noop` and explain which source could not be fetched. Additionally, create in log a table style 
-witn url that failed, detailed reason so that it is easy to traige, title the table as External failed calls
+web-page content. The runner's HTTP-status check above is diagnostic only; use
+`web_fetch` for source content. If a fetch fails during a normal run, do not use
+unverified content; call `noop` and include a table titled `External failed
+calls` with the URL, HTTP status when available, and detailed failure reason.
+Never invent a status code; write `not reported` if the fetch result provides
+none.
 
 Update `site/content/github-info.md` with concise,
 practical updates for readers and include source context when content comes
